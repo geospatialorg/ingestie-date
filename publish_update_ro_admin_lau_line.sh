@@ -11,7 +11,6 @@ source /home/ubuntu/anaconda3/etc/profile.d/conda.sh
 conda activate geo
 
 #🚏 definire căi date
-ins_data_path="/storage/volumes/geoserver-1-storage/brute/institutii_romania/ins/siruta"
 ancpi_data_path="/storage/volumes/geoserver-1-storage/brute/institutii_romania/ancpi/limite_administrative"
 lau_data_path="/storage/volumes/geoserver-1-storage/administrative_boundaries/lau"
 tmp_data_path="/storage/volumes/geoserver-1-storage/tmp"
@@ -43,11 +42,14 @@ echo "
 🛠 Procesare UAT linie
  "
 
-ogr2ogr -of SQLite -append -a_srs "EPSG:3844" ${tmp_data_path}/uat.db ${ancpi_data_path}/Limita_administrativa_UAT.shp
+ #💾 încărcare SHP ANCPI în SQLite
+ ogr2ogr -of SQLite -append -a_srs "EPSG:3844" ${tmp_data_path}/uat.db ${ancpi_data_path}/Limita_administrativa_UAT.shp
 
-sqlite3 ${tmp_data_path}/uat.db "CREATE TABLE split_siruta AS SELECT id, substr(localid, 1, instr(localid, '.') - 1) AS leftId, substr(localid, instr(localid, '.') + 1) AS rightId FROM Limita_administrativa_UAT"
+ #💾 creare tabel SQLite cu extragerea codurilor SIRUTA ale UAT-urilor vecine unei limite din câmpul localid și salvarea lor în câmpurile leftId și rightId
+ sqlite3 ${tmp_data_path}/uat.db "CREATE TABLE split_siruta AS SELECT id, substr(localid, 1, instr(localid, '.') - 1) AS leftId, substr(localid, instr(localid, '.') + 1) AS rightId FROM Limita_administrativa_UAT"
 
-ogr2ogr -of "SQLite" -append -dsco SPATIALITE=YES -lco LAUNDER=NO -a_srs EPSG:3844 -nln ${layer_name} -sql "SELECT a.OGC_FID AS id, c.name AS leftLAU, d.name AS rightLAU, CAST(b.leftId AS INTEGER) AS leftId, CAST(b.rightId AS INTEGER) AS rightId, a.beginvers AS version, a.legalStat AS legalStat, a.GEOMETRY FROM Limita_administrativa_UAT AS a LEFT JOIN split_siruta AS b ON (a.id = b.id) LEFT JOIN ro_admin_lau_polygon AS c ON (b.leftId=c.natCode) LEFT JOIN ro_admin_lau_polygon AS d ON (b.rightId=d.natCode)" ${tmp_data_path}/uat.db ${tmp_data_path}/uat.db
+ #💾 creare fișier final în SQLITE prin preluarea numelor UAT-urilor vecine din tabelul ro_admin_lau_polygon făcând join cu câmpurile cu coduri SIRUTA
+ ogr2ogr -of "SQLite" -append -dsco SPATIALITE=YES -lco LAUNDER=NO -a_srs EPSG:3844 -nln ${layer_name} -sql "SELECT a.OGC_FID AS id, c.name AS leftLAU, d.name AS rightLAU, CAST(b.leftId AS INTEGER) AS leftId, CAST(b.rightId AS INTEGER) AS rightId, a.beginvers AS version, a.legalStat AS legalStat, a.GEOMETRY FROM Limita_administrativa_UAT AS a LEFT JOIN split_siruta AS b ON (a.id = b.id) LEFT JOIN ro_admin_lau_polygon AS c ON (b.leftId=c.natCode) LEFT JOIN ro_admin_lau_polygon AS d ON (b.rightId=d.natCode)" ${tmp_data_path}/uat.db ${tmp_data_path}/uat.db
 
 #💾 creare versiune GeoPackage
 echo "💾 creare versiune GeoPackage"
