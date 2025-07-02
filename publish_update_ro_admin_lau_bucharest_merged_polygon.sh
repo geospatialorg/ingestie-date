@@ -41,7 +41,7 @@ echo "
 🛠 Procesare UAT poligon București comasat
 "
 
-#💾 creare versiune GeoPackage
+#💾 creare versiune GeoPackage folosind geometria inițială pentru a comasa sectoarele Bucureștiului într-o singură entitate
 echo "💾 creare versiune GeoPackage"
 if [ -f ${lau_data_path}/${layer_name}.gpkg ]; then
     rm ${lau_data_path}/${layer_name}.gpkg
