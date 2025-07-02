@@ -40,7 +40,7 @@ echo "
 🛠 Procesare UAT linie geometrie simplificată
 "
 
-#💾 creare versiune GeoJSON
+#💾 creare versiune GeoJSON prin simplificarea stratului original
 echo "💾 creare versiune GeoJSON"
 if [ -f ${lau_data_path}/${layer_name}.geojson ]; then
     rm ${lau_data_path}/${layer_name}.geojson
