@@ -15,7 +15,7 @@ lau_data_path="/storage/volumes/geoserver-1-storage/administrative_boundaries/la
 
 #⚙️ PostGIS
 pg_host="localhost"
-pg_port=5432
+pg_port=25432
 pg_user="user"
 pg_db="geospatial"
 pg_pass="pass"
@@ -40,12 +40,35 @@ echo "
 🛠  Procesare UAT linie București comasat
 "
 
-#💾 creare versiune GeoPackage
+#💾 creare versiune GeoPackage cu ștergerea limitelor interne dintre sectoare și păstrarea conturului Municipiului București (și înlocuirea leftLAU/rightLAU din sector în București)
 echo "💾 creare versiune GeoPackage"
 if [ -f ${lau_data_path}/${layer_name}.gpkg ]; then
 rm ${lau_data_path}/${layer_name}.gpkg
 fi
-ogr2ogr -of GPKG -lco FID=id -nln ${layer_name} -dialect sqlite -sql "SELECT * FROM ro_admin_lau_line WHERE id NOT IN (9010, 9011, 9012, 9633, 9215, 9009, 9013, 9014, 9015)" ${lau_data_path}/${layer_name}.gpkg ${lau_data_path}/ro_admin_lau_line.gpkg
+ogr2ogr -of GPKG -lco FID=id -nln ${layer_name} \
+  -dialect sqlite \
+  -sql "SELECT
+           id,
+           CASE
+             WHEN leftLAU IN ('București Sectorul 1', 'București Sectorul 2', 'București Sectorul 3',
+                              'București Sectorul 4', 'București Sectorul 5', 'București Sectorul 6')
+             THEN 'București'
+             ELSE leftLAU
+           END AS leftLAU,
+           CASE
+             WHEN rightLAU IN ('București Sectorul 1', 'București Sectorul 2', 'București Sectorul 3',
+                               'București Sectorul 4', 'București Sectorul 5', 'București Sectorul 6')
+             THEN 'București'
+             ELSE rightLAU
+           END AS rightLAU,
+           leftId,
+           rightId,
+           version,
+           legalStat,
+           geometry
+        FROM ro_admin_lau_line
+        WHERE id NOT IN (9010, 9011, 9012, 9633, 9215, 9009, 9013, 9014, 9015)" \
+  ${lau_data_path}/${layer_name}.gpkg ${lau_data_path}/ro_admin_lau_line.gpkg
 
 #💾 creare fișiere Esri Shapefile
 echo "💾 creare fișiere Esri Shapefile"
@@ -152,7 +175,7 @@ curl -s -u $gs_user:$gs_pass -XPUT -H "Content-type: text/xml" \
     </featureType>" \
 "${gs_url}/rest/workspaces/${gs_workspace}/datastores/${gs_store}/featuretypes/${layer_name}"
 
-#💾 Setare stil implicit + atașare stil suplimentar
+#💾 Setare stil implicit
 echo "🎨 Setare stil implicit + atașare stil suplimentar..."
 curl -s -u $gs_user:$gs_pass -XPUT -H "Content-type: text/xml" \
   -d "<layer>
