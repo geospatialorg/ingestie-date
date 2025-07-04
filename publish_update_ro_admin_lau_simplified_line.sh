@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT linie geometrie simplificată
+#🛠 Publicare/actualizare UAT, România (linie, geometrie simplificată)
 ##############################################################################################################
 
 #🎛 configurații
@@ -37,7 +37,7 @@ gs_layer_style="administrative-boundaries:ro_admin_lau_simplified_line"
 layer_name="ro_admin_lau_simplified_line"
 
 echo "
-🛠 Procesare UAT linie geometrie simplificată
+🛠 Procesare UAT, România (linie, geometrie simplificată)
 "
 
 #💾 creare versiune GeoJSON prin simplificarea stratului original

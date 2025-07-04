@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT, România  (linie, geometrie unificată București)
+#🛠 Publicare/actualizare UAT, România (linie, București unificat)
 ##############################################################################################################
 
 #🎛 configurații
@@ -27,7 +27,7 @@ gs_user="user"
 gs_pass="pass"
 gs_workspace="administrative-boundaries"
 gs_store="administrative-boundaries"
-gs_layer_title="Limite administrative - UAT, România  (linie, geometrie unificată București)"
+gs_layer_title="Limite administrative - UAT, România (linie, București unificat)"
 gs_layer_abstract="Set de date este derivat din Limite administrative - UAT, România (linie). Geometria originală pentru cele șase sectoare ale Municipiului București au fost unificată într-o singură geometrie. Setul de date este util pentru reprezentări în care se dorește ca Municipiul București să apară ca o singură entitate."
 gs_layer_keywords=("România" "UAT" "limite administrative" "vector" "linie" "sectoare București comasate")
 gs_layer_metadata_link="https://services.geo-spatial.org/geonetwork/srv/eng/catalog.search#/metadata/95ac1d94-27c8-47d0-9f7c-2fa480712100"
@@ -37,7 +37,7 @@ gs_layer_style="administrative-boundaries:ro_admin_lau_bucharest_merged_line"
 layer_name="ro_admin_lau_bucharest_merged_line"
 
 echo "
-🛠  Procesare UAT linie București comasat
+🛠  Procesare UAT, România (linie, București unificat)
 "
 
 #💾 creare versiune GeoPackage cu ștergerea limitelor interne dintre sectoare și păstrarea conturului Municipiului București (și înlocuirea leftLAU/rightLAU din sector în București)

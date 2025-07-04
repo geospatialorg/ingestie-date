@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT linie
+#🛠 Publicare/actualizare UAT, România (linie)
 ##############################################################################################################
 
 #🎛 configurații
@@ -39,7 +39,7 @@ gs_layer_style="administrative-boundaries:ro_admin_lau_line"
 layer_name="ro_admin_lau_line"
 
 echo "
-🛠 Procesare UAT linie
+🛠 Procesare UAT, România (linie)
  "
 
  #💾 încărcare SHP ANCPI în SQLite

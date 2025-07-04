@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT(poligon, geometrie unificată București)
+#🛠 Publicare/actualizare UAT, România (poligon, București unificat)
 ##############################################################################################################
 
 #🎛 configurații
@@ -27,7 +27,7 @@ gs_user="user"
 gs_pass="pass"
 gs_workspace="administrative-boundaries"
 gs_store="administrative-boundaries"
-gs_layer_title="Limite administrative - UAT, România (poligon, geometrie unificată București)"
+gs_layer_title="Limite administrative - UAT, România (poligon, București unificat)"
 gs_layer_abstract="Set de date este derivat din Limite administrative - UAT, România (poligon). Geometria originală pentru cele șase sectoare ale Municipiului București au fost unificată într-o singură geometrie ce a primit numele București și codul siruta 403 (codul aferent nivelului administrativ de tip județ pentru București). Setul de date este util pentru reprezentări în care se dorește ca Municipiul București să apară ca o singură entitate."
 gs_layer_keywords=("România" "UAT" "limite administrative" "vector" "poligon" "sectoare București comasate")
 gs_layer_metadata_link="https://services.geo-spatial.org/geonetwork/srv/eng/catalog.search#/metadata/276ce5c1-2b60-43ee-b19c-25fb0c830b08"
@@ -38,7 +38,7 @@ gs_layer_secondary_style="administrative-boundaries:ro_admin_lau_bucharest_merge
 layer_name="ro_admin_lau_bucharest_merged_polygon"
 
 echo "
-🛠 Procesare UAT poligon București comasat
+🛠 Procesare UAT, România (poligon, București unificat)
 "
 
 #💾 creare versiune GeoPackage folosind geometria inițială pentru a comasa sectoarele Bucureștiului într-o singură entitate

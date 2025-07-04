@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT polygon geometrie simplificată
+#🛠 Publicare/actualizare UAT, România (poligon, geometrie simplificată)
 ##############################################################################################################
 
 #🎛 configurații
@@ -38,7 +38,7 @@ gs_layer_secondary_style="administrative-boundaries:ro_admin_lau_simplified_poly
 layer_name="ro_admin_lau_simplified_polygon"
 
 echo "
-🛠 Procesare UAT poligon geometrie simplificată
+🛠 Procesare UAT, România (poligon, geometrie simplificată)
 "
 
 #💾 creare versiune GeoJSON prin simplificarea stratului original

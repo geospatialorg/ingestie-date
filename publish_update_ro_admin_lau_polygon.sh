@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 ##############################################################################################################
-#🛠 Publicare/actualizare UAT polygon
+#🛠 Publicare/actualizare UAT, România (poligon)
 ##############################################################################################################
 
 #🎛 configurații
@@ -41,7 +41,7 @@ gs_layer_secondary_style="administrative-boundaries:ro_admin_lau_polygon"
 layer_name="ro_admin_lau_polygon"
 
 echo "
-🛠 Procesare UAT poligon
+🛠 Procesare UAT, România (poligon)
  "
 
 echo "💾 Încărcare date în SQLite"
