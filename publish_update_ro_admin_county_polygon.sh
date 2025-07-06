@@ -188,4 +188,4 @@ echo "✅ Stratul ${layer_name} a fost adăugat și configurat cu succes în Geo
 
 #🗑️ Ștergere fișiere intermediare
 echo "🗑️ Ștergere fișiere Shapefile"
-rm ${county_data_path}/${layer_name}.dbf ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.prj ${county_data_path}/${layer_name}.shx ${county_data_path}/${layer_name}.cpg
+rm ${county_data_path}/${layer_name}.dbf ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.prj ${county_data_path}/${layer_name}.shx ${county_data_path}/${layer_name}.cpg  ${tmp_data_path}/judete.db
