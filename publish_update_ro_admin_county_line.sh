@@ -66,56 +66,56 @@ ogr2ogr -of "SQLite" -append -dsco SPATIALITE=YES -lco LAUNDER=NO -a_srs EPSG:38
 
 #💾 creare versiune GeoPackage
 echo creare versiune GeoPackage
-if [ -f ${county_data_path}/ro_admin_county_line.gpkg ]; then
-    rm ${county_data_path}/ro_admin_county_line.gpkg
+if [ -f ${county_data_path}/${layer_name}.gpkg ]; then
+    rm ${county_data_path}/${layer_name}.gpkg
 fi
-ogr2ogr -of GPKG -lco FID=id -a_srs EPSG:3844 -nlt MULTILINESTRING -nln ro_admin_county_line -dialect sqlite -sql "SELECT GEOMETRY AS geometry, * FROM ro_admin_county_line" ${county_data_path}/ro_admin_county_line.gpkg ${tmp_data_path}/judete.db
+ogr2ogr -of GPKG -lco FID=id -a_srs EPSG:3844 -nlt MULTILINESTRING -nln ${layer_name} -dialect sqlite -sql "SELECT GEOMETRY AS geometry, * FROM ${layer_name}" ${county_data_path}/${layer_name}.gpkg ${tmp_data_path}/judete.db
 
 #💾 creare fișiere Esri Shapefile
 echo "💾 creare fișiere Esri Shapefile"
-if [ -f ${county_data_path}/ro_admin_county_line.zip ]; then
-    rm ${county_data_path}/ro_admin_county_line.zip
+if [ -f ${county_data_path}/${layer_name}.zip ]; then
+    rm ${county_data_path}/${layer_name}.zip
 fi
-ogr2ogr -lco ENCODING=UTF-8 -nln ro_admin_county_line -dialect sqlite -sql "SELECT a.id AS id, * FROM ro_admin_county_line AS a" ${county_data_path}/ro_admin_county_line.shp ${county_data_path}/ro_admin_county_line.gpkg
+ogr2ogr -lco ENCODING=UTF-8 -nln ${layer_name} -dialect sqlite -sql "SELECT a.id AS id, * FROM ${layer_name} AS a" ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.gpkg
 
 #📦 arhivare fișiere shp
 echo "📦 arhivare fișiere shp"
-zip -j ${county_data_path}/ro_admin_county_line.zip ${county_data_path}/ro_admin_county_line.dbf ${county_data_path}/ro_admin_county_line.shp ${county_data_path}/ro_admin_county_line.prj ${county_data_path}/ro_admin_county_line.shx ${county_data_path}/ro_admin_county_line.cpg
+zip -j ${county_data_path}/${layer_name}.zip ${county_data_path}/${layer_name}.dbf ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.prj ${county_data_path}/${layer_name}.shx ${county_data_path}/${layer_name}.cpg
 
 #💾 creare versiune FlatGeobuf
 echo "💾 creare versiune FlatGeobuf"
-if [ -f ${county_data_path}/ro_admin_county_line.fgb ]; then
-    rm ${county_data_path}/ro_admin_county_line.fgb
+if [ -f ${county_data_path}/${layer_name}.fgb ]; then
+    rm ${county_data_path}/${layer_name}.fgb
 fi
-ogr2ogr -of FlatGeobuf -nlt MULTILINESTRING -nln ro_admin_county_line -dialect sqlite -sql "SELECT a.id AS id, * FROM ro_admin_county_line AS a" ${county_data_path}/ro_admin_county_line.fgb ${county_data_path}/ro_admin_county_line.gpkg
+ogr2ogr -of FlatGeobuf -nlt MULTILINESTRING -nln ${layer_name} -dialect sqlite -sql "SELECT a.id AS id, * FROM ${layer_name} AS a" ${county_data_path}/${layer_name}.fgb ${county_data_path}/${layer_name}.gpkg
 
 #💾 creare versiune GeoParquet
 echo "💾 creare versiune GeoParquet"
-if [ -f ${county_data_path}/ro_admin_county_line.parquet ]; then
-    rm ${county_data_path}/ro_admin_county_line.parquet
+if [ -f ${county_data_path}/${layer_name}.parquet ]; then
+    rm ${county_data_path}/${layer_name}.parquet
 fi
-ogr2ogr -of Parquet -nlt MULTILINESTRING -nln ro_admin_county_line -dialect sqlite -sql "SELECT a.id AS id, * FROM ro_admin_county_line AS a" ${county_data_path}/ro_admin_county_line.parquet ${county_data_path}/ro_admin_county_line.gpkg
+ogr2ogr -of Parquet -nlt MULTILINESTRING -nln ${layer_name} -dialect sqlite -sql "SELECT a.id AS id, * FROM ${layer_name} AS a" ${county_data_path}/${layer_name}.parquet ${county_data_path}/${layer_name}.gpkg
 
 #💾 creare versiune GeoJSON
 echo "💾 creare versiune GeoJSON"
-if [ -f ${county_data_path}/ro_admin_county_line.geojson ]; then
-    rm ${county_data_path}/ro_admin_county_line.geojson
+if [ -f ${county_data_path}/${layer_name}.geojson ]; then
+    rm ${county_data_path}/${layer_name}.geojson
 fi
-ogr2ogr -of GeoJSON -t_srs EPSG:4326 -nln ro_admin_county_line -dialect sqlite -sql "SELECT a.id AS id, * FROM ro_admin_county_line AS a" ${county_data_path}/ro_admin_county_line.geojson ${county_data_path}/ro_admin_county_line.gpkg
+ogr2ogr -of GeoJSON -t_srs EPSG:4326 -nln ${layer_name} -dialect sqlite -sql "SELECT a.id AS id, * FROM ${layer_name} AS a" ${county_data_path}/${layer_name}.geojson ${county_data_path}/${layer_name}.gpkg
 
 #💾 creare versiune KML
 echo "💾 creare versiune KML"
-if [ -f ${county_data_path}/ro_admin_county_line.kml ]; then
-    rm ${county_data_path}/ro_admin_county_line.kml
+if [ -f ${county_data_path}/${layer_name}.kml ]; then
+    rm ${county_data_path}/${layer_name}.kml
 fi
-ogr2ogr -of KML -t_srs EPSG:4326 -dsco NameField=name ${county_data_path}/ro_admin_county_line.kml ${county_data_path}/ro_admin_county_line.gpkg
+ogr2ogr -of KML -t_srs EPSG:4326 -dsco NameField=name ${county_data_path}/${layer_name}.kml ${county_data_path}/${layer_name}.gpkg
 
 #💾 creare versiune TopoJSON
 echo "💾 creare versiune TopoJSON"
-if [ -f ${county_data_path}/ro_admin_county_line.topojson ]; then
-    rm ${county_data_path}/ro_admin_county_line.topojson
+if [ -f ${county_data_path}/${layer_name}.topojson ]; then
+    rm ${county_data_path}/${layer_name}.topojson
 fi
-mapshaper -i ${county_data_path}/ro_admin_county_line.shp -o format=topojson ${county_data_path}/ro_admin_county_line.topojson
+mapshaper -i ${county_data_path}/${layer_name}.shp -o format=topojson ${county_data_path}/${layer_name}.topojson
 
 #💾 actualizarea setului de date în baza de date PostGIS
 echo "💾 actualizarea setului de date în baza de date PostGIS"
