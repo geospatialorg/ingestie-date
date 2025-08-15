@@ -156,13 +156,18 @@ curl -s -u $gs_user:$gs_pass -XPUT -H "Content-type: text/xml" \
     </featureType>" \
 "${gs_url}/rest/workspaces/${gs_workspace}/datastores/${gs_store}/featuretypes/${layer_name}"
 
-#💾 Setare stil implicit
-echo "🎨 Setare stil ${gs_layer_style}..."
+#💾 Setare stil implicit + atașare stil suplimentar
+echo "🎨 Setare stil implicit + atașare stil suplimentar..."
 curl -s -u $gs_user:$gs_pass -XPUT -H "Content-type: text/xml" \
   -d "<layer>
          <defaultStyle>
-             <name>${gs_layer_style}</name>
+             <name>${gs_layer_style##*:}</name>
          </defaultStyle>
+         <styles>
+             <style>
+                 <name>${gs_layer_secondary_style##*:}</name>
+             </style>
+         </styles>
      </layer>" \
   "${gs_url}/rest/layers/${gs_workspace}:${layer_name}"
 
