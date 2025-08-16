@@ -8,12 +8,12 @@ from shapely.ops import unary_union
 ogr.UseExceptions()
 
 # === CONFIGURARE ===
-input_file = "ro_admin_region_polygon.gpkg"
-input_layer_name = "ro_admin_region_polygon"
-field_name_name = "name"             # denumirea județului
-field_name_id = "regionCode"         # cod numeric al județului
-output_file = "ro_admin_region_line_tmp.gpkg"
-output_layer_name = "ro_admin_region_line_tmp"
+input_file = "/storage/volumes/geoserver-1-storage/administrative_boundaries/county/ro_admin_county_simplified_polygon.gpkg"
+input_layer_name = "ro_admin_county_simplified_polygon"
+field_name_name = "name"
+field_name_id = "countyCode"
+output_file = "/storage/volumes/geoserver-1-storage/administrative_boundaries/county/ro_admin_county_simplified_line_tmp.gpkg"
+output_layer_name = "ro_admin_county_simplified_line_tmp"
 
 # === Citim poligoanele și preluăm valoarea version ===
 source = ogr.Open(input_file)
