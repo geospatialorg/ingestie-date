@@ -56,6 +56,20 @@ ogr2ogr -of GPKG -s_srs EPSG:4326 -t_srs EPSG:3844 -nln ${layer_name}_int ${lau_
 
 ogr2ogr -of GPKG -lco FID=id -nln ${layer_name} -dialect sqlite -sql "SELECT geom AS geometry, * FROM ${layer_name}_int" ${lau_data_path}/${layer_name}.gpkg ${lau_data_path}/${layer_name}_int.gpkg
 
+#💾 inserare UAT Bălan
+ogrinfo ${lau_data_path}/${layer_name}.gpkg \
+  -dialect SQLite \
+  -sql "UPDATE ${layer_name}
+        SET geometry = ST_GeomFromText('LINESTRING(560837.2707372273 575700.7060779982,
+                                                 561079.9577371818 574279.4160781316,
+                                                 561567.9327369902 573205.0090782174,
+                                                 562075.8707367636 572528.0920782610,
+                                                 562229.2947366540 572899.1570782135,
+                                                 561568.4367369558 573798.3030781478,
+                                                 561256.2697370579 574868.2040780619,
+                                                 560837.2707372273 575700.7060779982)', 3844)
+        WHERE id = 5007"
+
 #💾 creare versiune Esri Shapefile
 echo "💾 creare versiune Esri Shapefile"
 if [ -f ${lau_data_path}/${layer_name}.zip ]; then
