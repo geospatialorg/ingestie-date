@@ -45,7 +45,14 @@ echo "
  if [ -f ${county_data_path}/${layer_name}.gpkg ]; then
      rm ${county_data_path}/${layer_name}.gpkg
  fi
- ogr2ogr -of GPKG -lco FID=id -nln ${layer_name} -nlt MULTILINESTRING -dialect sqlite -sql "SELECT a.geometry FROM ro_admin_county_simplified_polygon AS a" ${county_data_path}/${layer_name}.gpkg ${county_data_path}/ro_admin_county_simplified_polygon.gpkg
+
+ #💾 apelează script Python pentru conversie și crearea câmpurilor leftName, leftId, respectiv rightName și rightId
+ echo "💾 apelează script Python pentru conversie"
+ python convert_ro_admin_county_simplified_polygon_to_line.py
+
+ #💾 creare fișier GeoPackage final
+ echo "💾 creare fișier GeoPackage final"
+ ogr2ogr -of GPKG -lco FID=id -nln ${layer_name} -nlt MULTILINESTRING ${county_data_path}/${layer_name}.gpkg ${county_data_path}/${layer_name}_tmp.gpkg
 
  #💾 creare versiune Esri Shapefile
  echo "💾 creare versiune Esri Shapefile"
@@ -166,4 +173,4 @@ echo "✅ Stratul ${layer_name} a fost adăugat și configurat cu succes în Geo
 
 #🗑️ Ștergere fișiere intermediare
 echo "🗑️ Ștergere fișiere Shapefile"
-rm ${county_data_path}/${layer_name}.dbf ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.prj ${county_data_path}/${layer_name}.shx ${county_data_path}/${layer_name}.cpg
+rm ${county_data_path}/${layer_name}.dbf ${county_data_path}/${layer_name}.shp ${county_data_path}/${layer_name}.prj ${county_data_path}/${layer_name}.shx ${county_data_path}/${layer_name}.cpg ${county_data_path}/${layer_name}_tmp.gpkg
